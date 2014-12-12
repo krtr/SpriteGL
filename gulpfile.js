@@ -30,5 +30,6 @@ gulp.task("debug", function () {
 
 	server.start(function () {
 		console.log('Server listening to', server.port);
+		open("http://localhost")
 	});
 })
