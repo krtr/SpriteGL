@@ -18,6 +18,8 @@
     <IISExpressUseClassicPipelineMode />
   </PropertyGroup>
   <ItemGroup>
+    <TypeScriptCompile Include="privates.ts" />
+    <TypeScriptCompile Include="shaders.ts" />
     <TypeScriptCompile Include="spriteRenderer.ts" />
   </ItemGroup>
   <PropertyGroup>

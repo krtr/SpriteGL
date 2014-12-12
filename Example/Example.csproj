@@ -22,6 +22,9 @@
     <Content Include="web.config" />
   </ItemGroup>
   <ItemGroup>
+    <TypeScriptCompile Include="..\bin\SpriteGL.d.ts">
+      <Link>SpriteGL.d.ts</Link>
+    </TypeScriptCompile>
     <TypeScriptCompile Include="app.ts" />
   </ItemGroup>
   <ItemGroup>
