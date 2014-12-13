@@ -1,5 +1,9 @@
-﻿window.onload = () => {
+﻿window.onload = function() {
 	var canvas = <HTMLCanvasElement> document.getElementById("RenderElement");
 	var test = SpriteGL.SpriteRenderer.fromCanvas(canvas);
-	test.Render();
+	var Loop = () => {
+		test.Render();
+		requestAnimationFrame(Loop);
+	}
+	requestAnimationFrame(Loop);
 };

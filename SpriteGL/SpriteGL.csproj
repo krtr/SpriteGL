@@ -19,8 +19,9 @@
   </PropertyGroup>
   <ItemGroup>
     <TypeScriptCompile Include="privates.ts" />
-    <TypeScriptCompile Include="shaders.ts" />
+    <TypeScriptCompile Include="shader.ts" />
     <TypeScriptCompile Include="spriteRenderer.ts" />
+    <TypeScriptCompile Include="vbo.ts" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">12.0</VisualStudioVersion>
