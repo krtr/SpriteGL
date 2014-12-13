@@ -11,14 +11,15 @@
 			this.gl.useProgram(this.Shader.glProgram);
 
 			this.gl.clearColor(0.0, 0.0, 0.0, 1.0);
+			this.vbo.SetupForDraw(this.gl, this.Shader.VertexPosAttribute);
 		}
 
 		Render() {
+			var start = performance.now();
 			this.gl.clear(this.gl.COLOR_BUFFER_BIT);
-			this.gl.enableVertexAttribArray(this.Shader.VertexPosAttribute);
-			this.gl.bindBuffer(this.gl.ARRAY_BUFFER, this.vbo.verticlesBuffer);
-			this.gl.vertexAttribPointer(this.Shader.VertexPosAttribute, 3, this.gl.FLOAT, false, 0, 0);
-			this.gl.drawArrays(this.gl.TRIANGLES, 0, 3);
+			this.vbo.DrawAll(this.gl);
+			var time = performance.now() - start;
+			console.log(time);
 		}
 
 		static fromCanvas(canvas: HTMLCanvasElement): SpriteRenderer {
