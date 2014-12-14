@@ -1,34 +1,48 @@
 ﻿module SpriteGL {
 	export class SpriteRenderer {
-		gl: WebGLRenderingContext;
-		Shader: Shader;
+		private gl: WebGLRenderingContext;
+		private Shader: Shader;
 		vbo: VBO;
+		private texture: WebGLTexture;
 
-		constructor(webglContext: WebGLRenderingContext) {
+		constructor(webglContext: WebGLRenderingContext, Image: HTMLImageElement) {
 			this.gl = webglContext;
 			this.vbo = new VBO(this.gl);
 			this.Shader = new Shader(this.gl);
 			this.gl.useProgram(this.Shader.glProgram);
 
 			this.gl.clearColor(0.0, 0.0, 0.0, 1.0);
-			this.vbo.SetupForDraw(this.gl, this.Shader.VertexPosAttribute);
+			this.CreateTexture(Image);
+			this.vbo.SetupForDraw(this.gl, this.Shader.VertexPosAttribute, this.Shader.TexCoordAttribute,this.Shader.TexSampleUniform, 2);
 		}
 
 		Render() {
-			var start = performance.now();
 			this.gl.clear(this.gl.COLOR_BUFFER_BIT);
 			this.vbo.DrawAll(this.gl);
-			var time = performance.now() - start;
-			console.log(time);
 		}
 
-		static fromCanvas(canvas: HTMLCanvasElement): SpriteRenderer {
+		UpdateSize(width: number, height: number) {
+			this.gl.viewport(0, 0, width, height);
+		}
+
+		private CreateTexture(image: HTMLImageElement) {
+			this.texture = this.gl.createTexture();
+			this.gl.bindTexture(this.gl.TEXTURE_2D, this.texture);
+			this.gl.texImage2D(this.gl.TEXTURE_2D, 0, this.gl.RGB, this.gl.RGB, this.gl.UNSIGNED_BYTE, image);
+			this.gl.texParameteri(this.gl.TEXTURE_2D, this.gl.TEXTURE_MAG_FILTER, this.gl.NEAREST);
+			this.gl.texParameteri(this.gl.TEXTURE_2D, this.gl.TEXTURE_MIN_FILTER, this.gl.NEAREST);
+		}
+
+		static fromCanvas(canvas: HTMLCanvasElement, Image: HTMLImageElement): SpriteRenderer {
 			try {
 			var ctx = canvas.getContext("webgl") || canvas.getContext("experimental-webgl");
 			} catch (e) {
+				console.log("Error with WebGL context initialization");
 				return null;
 			}
-			return new SpriteRenderer(ctx);
+			var newRenderer = new SpriteRenderer(ctx, Image);
+			newRenderer.UpdateSize(canvas.width, canvas.height);
+			return newRenderer;
 		}
 
 	}
