@@ -18,7 +18,9 @@
     <IISExpressUseClassicPipelineMode />
   </PropertyGroup>
   <ItemGroup>
-    <TypeScriptCompile Include="privates.ts" />
+    <TypeScriptCompile Include="..\3rd\tsm-0.7.d.ts">
+      <Link>tsm-0.7.d.ts</Link>
+    </TypeScriptCompile>
     <TypeScriptCompile Include="shader.ts" />
     <TypeScriptCompile Include="spriteRenderer.ts" />
     <TypeScriptCompile Include="vbo.ts" />

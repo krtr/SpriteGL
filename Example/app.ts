@@ -1,18 +1,17 @@
 ﻿window.onload = function () {
-	var canvas = <HTMLCanvasElement> document.getElementById("RenderElement");
-	var img = new Image();
-	img.onload = function () {
-		var test = SpriteGL.SpriteRenderer.fromCanvas(canvas,img);
-		var Loop = () => {
+    var canvas = <HTMLCanvasElement> document.getElementById("RenderElement");
+    var img = new Image();
+    img.onload = function () {
+        var test = SpriteGL.SpriteRenderer.fromCanvas(canvas, img);
+        var x = 0;
+        var Loop = () => {
+            x += 0.1;
+            test.Draw((Math.cos(x) + 2) * 100 - 100, (Math.sin(x) + 2) * 100 - 100, (Math.cos(x)+2) * 100, (Math.sin(x)+2) * 100 , 0, 0, 100, 100);
 
-			for (var i = 0; i < 10000; i++) {
-				test.vbo.DrawMoar(Math.random() - 0.5, Math.random() - 0.5, (Math.random() * 2) | 0, (Math.random() * 2));
-			}
-
-			test.Render();
-			requestAnimationFrame(Loop);
-		}
-		requestAnimationFrame(Loop);
-	}
-	img.src = "atlas.png";
+            test.Render();
+            requestAnimationFrame(Loop);
+        }
+        requestAnimationFrame(Loop);
+    }
+    img.src = "atlas.png";
 };
