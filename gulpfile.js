@@ -48,6 +48,14 @@ gulp.task("remove-internal-classes", function () {
         var start = data.indexOf("class SpriteRenderer {", 0);
         var end = data.indexOf("}", start+1);
         var new_string = data.substring(start, end + 1);
+        var lines = new_string.split("\n");
+        for (var i = 0; i < lines.length; i++) {
+            if (lines[i].indexOf("private") !== -1) {
+                lines.splice(i, 1);
+                i--;
+            }
+        }
+        new_string = lines.join("\n");
         fs.writeFileSync('./bin/SpriteGL.d.ts',"declare module SpriteGL { \n" + new_string + "\n }");
     }, 1000);
 
