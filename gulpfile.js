@@ -1,7 +1,6 @@
 var gulp = require("gulp");
 var typescript = require("gulp-typescript");
 var concat = require("gulp-concat");
-var nodemon = require("gulp-nodemon");
 var open = require("open");
 var StaticServer = require('static-server');
 var addsrc = require('gulp-add-src');

@@ -11,16 +11,15 @@
             this.vbo = new VBO(this.gl);
             this.Shader = new Shader(this.gl);
             this.gl.useProgram(this.Shader.glProgram);
+            this.CreateTexture(Image);
+            this.vbo.SetupForDraw(this.Shader.VertexPosAttribute, this.Shader.TexCoordAttribute, Image.width);
 
             this.gl.clearColor(0.0, 0.0, 0.0, 1.0);
-            this.CreateTexture(Image);
-            this.gl.uniform1i(this.Shader.TexSampleUniform, 0);
-            this.vbo.SetupForDraw(this.gl, this.Shader.VertexPosAttribute, this.Shader.TexCoordAttribute, Image.width);
         }
 
         Render() {
             this.gl.clear(this.gl.COLOR_BUFFER_BIT);
-            this.vbo.DrawAll(this.gl);
+            this.vbo.DrawAll();
         }
 
         UpdateViewPort(width: number, height: number) {

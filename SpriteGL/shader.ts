@@ -4,17 +4,19 @@
 		glProgram: WebGLProgram;
 		VertexPosAttribute: number;
 		TexCoordAttribute: number;
-		TexSampleUniform: WebGLUniformLocation;
+		private TexSampleUniform: WebGLUniformLocation;
         private MatUniform: WebGLUniformLocation;
         private gl: WebGLRenderingContext = null;
 
         constructor(gl: WebGLRenderingContext) {
             this.gl = gl;
-			this.glProgram = this.MakeProgram(gl);
+            this.glProgram = this.MakeProgram(gl);
 			this.VertexPosAttribute = gl.getAttribLocation(this.glProgram, "aVertexPosition");
 			this.TexCoordAttribute = gl.getAttribLocation(this.glProgram, "aTexCoord");
             this.TexSampleUniform = gl.getUniformLocation(this.glProgram, "sampler2d");
+            this.gl.uniform1i(this.TexSampleUniform, 0);
             this.MatUniform = gl.getUniformLocation(this.glProgram, "uProjectionView");
+
 		}
 
 		private MakeProgram(gl: WebGLRenderingContext): WebGLProgram {
@@ -38,7 +40,8 @@
 				alert(gl.getShaderInfoLog(Shader));
 			}
 			return Shader;
-		}
+        }
+
         public updateMatrix(mat: TSM.mat4) {
             this.gl.uniformMatrix4fv(this.MatUniform, false, mat.all());
         }

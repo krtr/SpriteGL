@@ -4,26 +4,28 @@
         verticlesBuffer: WebGLBuffer;
         private verts = [];
         private AtlasSize = 1;
+        private gl: WebGLRenderingContext = null;
 
         constructor(gl: WebGLRenderingContext) {
+            this.gl = gl;
             this.verticlesBuffer = gl.createBuffer();
             gl.bindBuffer(gl.ARRAY_BUFFER, this.verticlesBuffer);
         }
 
-        SetupForDraw(gl: WebGLRenderingContext, vertexPositionAttr: number, textureCoordAttr: number, AtlasSize: number) {
+        SetupForDraw(vertexPositionAttr: number, textureCoordAttr: number, AtlasSize: number) {
 
-            gl.enableVertexAttribArray(vertexPositionAttr);
-            gl.vertexAttribPointer(vertexPositionAttr, 2, gl.FLOAT, false, 16, 0);
+            this.gl.enableVertexAttribArray(vertexPositionAttr);
+            this.gl.vertexAttribPointer(vertexPositionAttr, 2, this.gl.FLOAT, false, 16, 0);
 
-            gl.enableVertexAttribArray(textureCoordAttr);
-            gl.vertexAttribPointer(textureCoordAttr, 2, gl.FLOAT, false, 16, 8);
+            this.gl.enableVertexAttribArray(textureCoordAttr);
+            this.gl.vertexAttribPointer(textureCoordAttr, 2, this.gl.FLOAT, false, 16, 8);
 
             this.AtlasSize = AtlasSize;
         }
 
-        DrawAll(gl: WebGLRenderingContext) {
-            gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(this.verts), gl.STREAM_DRAW);
-            gl.drawArrays(gl.TRIANGLES, 0, this.verts.length / 4);
+        DrawAll() {
+            this.gl.bufferData(this.gl.ARRAY_BUFFER, new Float32Array(this.verts), this.gl.STREAM_DRAW);
+            this.gl.drawArrays(this.gl.TRIANGLES, 0, this.verts.length / 4);
             this.verts = []
         }
 
