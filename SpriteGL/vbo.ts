@@ -23,13 +23,13 @@
             this.AtlasSize = AtlasSize;
         }
 
-        DrawAll() {
+        RenderAll() {
             this.gl.bufferData(this.gl.ARRAY_BUFFER, new Float32Array(this.verts), this.gl.STREAM_DRAW);
             this.gl.drawArrays(this.gl.TRIANGLES, 0, this.verts.length / 4);
             this.verts = []
         }
 
-        DrawMoar(AtlasX: number, AtlasY: number, AtlasWidth, AtlasHeigh, ScreenX: number, ScreenY: number, ScreenWidth: number, ScreenHeight) {
+        Draw(AtlasX: number, AtlasY: number, AtlasWidth, AtlasHeigh, ScreenX: number, ScreenY: number, ScreenWidth: number, ScreenHeight) {
             for (var i = 0; i < VBO.defaultVerts.length; i += 2) {
                 //Pos
                 this.verts.push(VBO.defaultVerts[i] * ScreenWidth + ScreenX | 0);

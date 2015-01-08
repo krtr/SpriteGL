@@ -14,10 +14,14 @@
 			this.VertexPosAttribute = gl.getAttribLocation(this.glProgram, "aVertexPosition");
 			this.TexCoordAttribute = gl.getAttribLocation(this.glProgram, "aTexCoord");
             this.TexSampleUniform = gl.getUniformLocation(this.glProgram, "sampler2d");
-            this.gl.uniform1i(this.TexSampleUniform, 0);
             this.MatUniform = gl.getUniformLocation(this.glProgram, "uProjectionView");
 
 		}
+
+        public UseProgram() {
+            this.gl.useProgram(this.glProgram);
+            this.gl.uniform1i(this.TexSampleUniform, 0);
+        }
 
 		private MakeProgram(gl: WebGLRenderingContext): WebGLProgram {
 			var vertexShader = this.CompileShader(gl, Shader.defaultVertexShaderSrc, gl.VERTEX_SHADER);

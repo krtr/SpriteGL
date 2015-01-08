@@ -10,16 +10,16 @@
             this.gl = webglContext;
             this.vbo = new VBO(this.gl);
             this.Shader = new Shader(this.gl);
-            this.gl.useProgram(this.Shader.glProgram);
+            this.Shader.UseProgram();
             this.CreateTexture(Image);
             this.vbo.SetupForDraw(this.Shader.VertexPosAttribute, this.Shader.TexCoordAttribute, Image.width);
 
             this.gl.clearColor(0.0, 0.0, 0.0, 1.0);
         }
 
-        Render() {
+        RenderAll() {
             this.gl.clear(this.gl.COLOR_BUFFER_BIT);
-            this.vbo.DrawAll();
+            this.vbo.RenderAll();
         }
 
         UpdateViewPort(width: number, height: number) {
@@ -30,7 +30,7 @@
         }
 
         Draw(AtlasX: number, AtlasY: number, AtlasWidth, AtlasHeigh, ScreenX: number, ScreenY: number, ScreenWidth: number, ScreenHeight) {
-            this.vbo.DrawMoar(AtlasX, AtlasY, AtlasWidth, AtlasHeigh, ScreenX, ScreenY, ScreenWidth, ScreenHeight);
+            this.vbo.Draw(AtlasX, AtlasY, AtlasWidth, AtlasHeigh, ScreenX, ScreenY, ScreenWidth, ScreenHeight);
         }
 
         private CreateTexture(image: HTMLImageElement) {
