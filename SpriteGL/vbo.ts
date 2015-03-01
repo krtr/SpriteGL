@@ -2,7 +2,8 @@
 
     export class VBO {
         verticlesBuffer: WebGLBuffer;
-        private verts = [];
+		private sprVerts = [];
+		private txtVerts = [];
         private AtlasSize = 1;
         private gl: WebGLRenderingContext = null;
 
@@ -13,7 +14,6 @@
         }
 
         SetupForDraw(vertexPositionAttr: number, textureCoordAttr: number, AtlasSize: number) {
-
             this.gl.enableVertexAttribArray(vertexPositionAttr);
             this.gl.vertexAttribPointer(vertexPositionAttr, 2, this.gl.FLOAT, false, 16, 0);
 
@@ -23,23 +23,39 @@
             this.AtlasSize = AtlasSize;
         }
 
-        RenderAll() {
-            this.gl.bufferData(this.gl.ARRAY_BUFFER, new Float32Array(this.verts), this.gl.STREAM_DRAW);
-            this.gl.drawArrays(this.gl.TRIANGLES, 0, this.verts.length / 4);
-            this.verts = []
-        }
+        RenderAllSpr() {
+            this.gl.bufferData(this.gl.ARRAY_BUFFER, new Float32Array(this.sprVerts), this.gl.STREAM_DRAW);
+			this.gl.drawArrays(this.gl.TRIANGLES, 0, this.sprVerts.length / 4);
+			this.sprVerts = []
+		}
 
-        Draw(AtlasX: number, AtlasY: number, AtlasWidth, AtlasHeigh, ScreenX: number, ScreenY: number, ScreenWidth: number, ScreenHeight) {
+		RenderAllTxt() {
+			this.gl.bufferData(this.gl.ARRAY_BUFFER, new Float32Array(this.txtVerts), this.gl.STREAM_DRAW);
+			this.gl.drawArrays(this.gl.TRIANGLES, 0, this.txtVerts.length / 4);
+			this.txtVerts = []
+		}
+
+        DrawSpr(AtlasX: number, AtlasY: number, AtlasWidth, AtlasHeigh, ScreenX: number, ScreenY: number, ScreenWidth: number, ScreenHeight) {
             for (var i = 0; i < VBO.defaultVerts.length; i += 2) {
                 //Pos
-                this.verts.push(VBO.defaultVerts[i] * ScreenWidth + ScreenX | 0);
-                this.verts.push(-VBO.defaultVerts[i + 1] * ScreenHeight + ScreenY | 0);
+				this.sprVerts.push(VBO.defaultVerts[i] * ScreenWidth + ScreenX | 0);
+				this.sprVerts.push(-VBO.defaultVerts[i + 1] * ScreenHeight + ScreenY | 0);
                 //Tex
-                this.verts.push(VBO.defaultVerts[i] * (AtlasWidth /this.AtlasSize) + (AtlasX / this.AtlasSize));
-                this.verts.push(VBO.defaultVerts[i + 1] * (AtlasHeigh / this.AtlasSize) + (AtlasY / this.AtlasSize));
+				this.sprVerts.push(VBO.defaultVerts[i] * (AtlasWidth /this.AtlasSize) + (AtlasX / this.AtlasSize));
+				this.sprVerts.push(VBO.defaultVerts[i + 1] * (AtlasHeigh / this.AtlasSize) + (AtlasY / this.AtlasSize));
             }
         }
 
+		DrawTxt(AtlasX: number, AtlasY: number, AtlasWidth, AtlasHeigh, ScreenX: number, ScreenY: number, ScreenWidth: number, ScreenHeight) {
+			for (var i = 0; i < VBO.defaultVerts.length; i += 2) {
+				//Pos
+				this.txtVerts.push(VBO.defaultVerts[i] * ScreenWidth + ScreenX | 0);
+				this.txtVerts.push(-VBO.defaultVerts[i + 1] * ScreenHeight + ScreenY | 0);
+				//Tex
+				this.txtVerts.push(VBO.defaultVerts[i] * (AtlasWidth / 1024) + (AtlasX / 1024));
+				this.txtVerts.push(VBO.defaultVerts[i + 1] * (AtlasHeigh / 1024) + (AtlasY / 1024));
+			}
+		}
         private static defaultVerts =
         [	//Left
             0.0, 1.0, // 1

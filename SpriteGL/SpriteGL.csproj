@@ -23,6 +23,7 @@
     </TypeScriptCompile>
     <TypeScriptCompile Include="shader.ts" />
     <TypeScriptCompile Include="spriteRenderer.ts" />
+    <TypeScriptCompile Include="text.ts" />
     <TypeScriptCompile Include="vbo.ts" />
   </ItemGroup>
   <PropertyGroup>
