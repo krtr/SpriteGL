@@ -5,7 +5,7 @@
 	img.onload = function () {
 		var Renderer = SpriteGL.SpriteRenderer.fromCanvas(canvas, img);
 		var time = 0;
-		var txt = Renderer.PrepareTxt("Gowno", "White", 13);
+		var txt = Renderer.PrepareTxt("Gowno", "White", 25, true);
 		var txt2 = Renderer.PrepareTxt("Chuj", "Red", 13);
 		var Loop = () => {
 			time += 0.002;

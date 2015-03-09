@@ -72,8 +72,8 @@
 			"uniform sampler2D sampler2d;",
 			"varying vec2 vtexCoord;",
 			"void main(void) {",
-            "	gl_FragColor = texture2D(sampler2d, vec2(vtexCoord.s,vtexCoord.t));",
-            "   if(gl_FragColor.a < 0.01) discard;",
+			"	gl_FragColor = texture2D(sampler2d, vec2(vtexCoord.s,vtexCoord.t));",
+            "  // if(gl_FragColor.a < 1.0) discard;",
 			"}"].join("\n");
 	}
 }

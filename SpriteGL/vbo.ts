@@ -19,18 +19,18 @@
 
             this.gl.enableVertexAttribArray(textureCoordAttr);
             this.gl.vertexAttribPointer(textureCoordAttr, 2, this.gl.FLOAT, false, 16, 8);
-
+			this.gl.bufferData(this.gl.ARRAY_BUFFER, new Float32Array(24*10000), this.gl.STREAM_DRAW);
             this.AtlasSize = AtlasSize;
         }
 
-        RenderAllSpr() {
-            this.gl.bufferData(this.gl.ARRAY_BUFFER, new Float32Array(this.sprVerts), this.gl.STREAM_DRAW);
+		RenderAllSpr() {
+			this.gl.bufferSubData(this.gl.ARRAY_BUFFER, 0, new Float32Array(this.sprVerts));
 			this.gl.drawArrays(this.gl.TRIANGLES, 0, this.sprVerts.length / 4);
 			this.sprVerts = []
 		}
 
 		RenderAllTxt() {
-			this.gl.bufferData(this.gl.ARRAY_BUFFER, new Float32Array(this.txtVerts), this.gl.STREAM_DRAW);
+			this.gl.bufferSubData(this.gl.ARRAY_BUFFER, 0, new Float32Array(this.txtVerts));
 			this.gl.drawArrays(this.gl.TRIANGLES, 0, this.txtVerts.length / 4);
 			this.txtVerts = []
 		}
@@ -39,7 +39,7 @@
             for (var i = 0; i < VBO.defaultVerts.length; i += 2) {
                 //Pos
 				this.sprVerts.push(VBO.defaultVerts[i] * ScreenWidth + ScreenX | 0);
-				this.sprVerts.push(-VBO.defaultVerts[i + 1] * ScreenHeight + ScreenY | 0);
+				this.sprVerts.push(-VBO.defaultVerts[i + 1] * ScreenHeight + ScreenY |0);
                 //Tex
 				this.sprVerts.push(VBO.defaultVerts[i] * (AtlasWidth /this.AtlasSize) + (AtlasX / this.AtlasSize));
 				this.sprVerts.push(VBO.defaultVerts[i + 1] * (AtlasHeigh / this.AtlasSize) + (AtlasY / this.AtlasSize));

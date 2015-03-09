@@ -17,8 +17,9 @@
 			this.vbo.SetupForDraw(this.Shader.VertexPosAttribute, this.Shader.TexCoordAttribute, Image.width);
 
 			this.gl.clearColor(0.0, 0.0, 0.0, 1.0);
-			this.gl.enable(this.gl.BLEND);
 			this.gl.blendFunc(this.gl.SRC_ALPHA, this.gl.ONE_MINUS_SRC_ALPHA);
+			this.gl.enable(this.gl.BLEND);
+			
 		}
 
 		RenderAll() {
@@ -40,8 +41,8 @@
 			this.vbo.DrawSpr(AtlasX, AtlasY, AtlasWidth, AtlasHeigh, ScreenX, ScreenY, ScreenWidth, ScreenHeight);
 		}
 
-		PrepareTxt(str: string, color:string, fontSize:number) {
-			return this.Text.PrepareTxt(str,color,fontSize);
+		PrepareTxt(str: string, color:string, fontSize:number, outLine = false) {
+			return this.Text.PrepareTxt(str,color,fontSize, outLine);
 		}
 
 		DrawTxt(txtObj, PosX: number, PosY: number) {
@@ -56,8 +57,8 @@
 			this.texture = this.gl.createTexture();
 			this.gl.bindTexture(this.gl.TEXTURE_2D, this.texture);
 			this.gl.texImage2D(this.gl.TEXTURE_2D, 0, this.gl.RGBA, this.gl.RGBA, this.gl.UNSIGNED_BYTE, image);
-			this.gl.texParameteri(this.gl.TEXTURE_2D, this.gl.TEXTURE_MAG_FILTER, this.gl.NEAREST);
-			this.gl.texParameteri(this.gl.TEXTURE_2D, this.gl.TEXTURE_MIN_FILTER, this.gl.NEAREST);
+			this.gl.texParameteri(this.gl.TEXTURE_2D, this.gl.TEXTURE_MAG_FILTER, this.gl.LINEAR);
+			this.gl.texParameteri(this.gl.TEXTURE_2D, this.gl.TEXTURE_MIN_FILTER, this.gl.LINEAR);
 		}
 
 		static fromCanvas(canvas: HTMLCanvasElement, Image: HTMLImageElement): SpriteRenderer {
