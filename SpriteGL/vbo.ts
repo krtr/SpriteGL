@@ -39,7 +39,7 @@
             for (var i = 0; i < VBO.defaultVerts.length; i += 2) {
                 //Pos
 				this.sprVerts.push(VBO.defaultVerts[i] * ScreenWidth + ScreenX | 0);
-				this.sprVerts.push(-VBO.defaultVerts[i + 1] * ScreenHeight + ScreenY |0);
+				this.sprVerts.push(VBO.defaultVerts[i + 1] * ScreenHeight + ScreenY |0);
                 //Tex
 				this.sprVerts.push(VBO.defaultVerts[i] * (AtlasWidth /this.AtlasSize) + (AtlasX / this.AtlasSize));
 				this.sprVerts.push(VBO.defaultVerts[i + 1] * (AtlasHeigh / this.AtlasSize) + (AtlasY / this.AtlasSize));
@@ -50,7 +50,7 @@
 			for (var i = 0; i < VBO.defaultVerts.length; i += 2) {
 				//Pos
 				this.txtVerts.push(VBO.defaultVerts[i] * ScreenWidth + ScreenX | 0);
-				this.txtVerts.push(-VBO.defaultVerts[i + 1] * ScreenHeight + ScreenY | 0);
+				this.txtVerts.push(VBO.defaultVerts[i + 1] * ScreenHeight + ScreenY | 0);
 				//Tex
 				this.txtVerts.push(VBO.defaultVerts[i] * (AtlasWidth / 1024) + (AtlasX / 1024));
 				this.txtVerts.push(VBO.defaultVerts[i + 1] * (AtlasHeigh / 1024) + (AtlasY / 1024));

@@ -32,7 +32,7 @@
 
 		UpdateViewPort(width: number, height: number) {
 			this.gl.viewport(0, 0, width, height);
-			var projmatrix = TSM.mat4.orthographic(-width / 2, width / 2, -height / 2, height / 2, 0.1, 2.0);
+			var projmatrix = TSM.mat4.orthographic(-width / 2, width / 2, height / 2, -height / 2, 0.1, 2.0);
 			var cameramatrix = TSM.mat4.lookAt(new TSM.vec3([0.0, 0.0, 1.0]), new TSM.vec3([0.0, 0.0, 0.0]), new TSM.vec3([0.0, 1.0, 0.0]));
 			this.Shader.updateMatrix(projmatrix.multiply(cameramatrix));
 		}

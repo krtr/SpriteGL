@@ -19,8 +19,12 @@
 				//Renderer.DrawSpr(0, 0, 32, 32, -roty, rotx, 32, 32);
 				Renderer.DrawTxt(txt, rotx, roty);
 				Renderer.DrawTxt(txt2, -roty, rotx);
+				
 			}
-
+			Renderer.DrawTxt(txt, 0, 0);
+			Renderer.DrawTxt(txt, 0, 100);
+			Renderer.DrawTxt(txt, 100, 0);
+			Renderer.DrawSpr(0, 0, 32, 32, -100, 0, 32, 32);
 			Renderer.UpdateCamera(time * 5, 0);
 			Renderer.RenderAll();
 			requestAnimationFrame(Loop);
