@@ -57,14 +57,14 @@
         }
 
 		private static defaultVertexShaderSrc = [
-			"attribute vec2 aVertexPosition;",
+			"attribute vec3 aVertexPosition;",
             "attribute vec2 aTexCoord;",
 			"uniform mat4 uProjectionView;",
 			"uniform vec2 uCameraPos;",
 			"varying vec2 vtexCoord;",
 			"void main(void) {",
 			"	vtexCoord = aTexCoord;",
-			"	gl_Position = vec4(aVertexPosition.x - uCameraPos.x, aVertexPosition.y - uCameraPos.y, 0.0, 1.0) * uProjectionView;",
+			"	gl_Position = vec4(aVertexPosition.x - uCameraPos.x, aVertexPosition.y - uCameraPos.y, aVertexPosition.z, 1.0) * uProjectionView;",
 			"}"].join("\n");
 
 		private static defaultFragmentShaderSrc = [
@@ -73,7 +73,7 @@
 			"varying vec2 vtexCoord;",
 			"void main(void) {",
 			"	gl_FragColor = texture2D(sampler2d, vec2(vtexCoord.s,vtexCoord.t));",
-            "  // if(gl_FragColor.a < 1.0) discard;",
+            "   if(gl_FragColor.a < 0.5) discard;",
 			"}"].join("\n");
 	}
 }

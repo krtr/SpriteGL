@@ -18,8 +18,10 @@
 
 			this.gl.clearColor(0.0, 0.0, 0.0, 1.0);
 			this.gl.blendFunc(this.gl.SRC_ALPHA, this.gl.ONE_MINUS_SRC_ALPHA);
-			this.gl.enable(this.gl.BLEND);
-			
+            this.gl.enable(this.gl.BLEND);
+            this.SetHight(0.0);
+            this.gl.enable(this.gl.DEPTH_TEST);
+            this.gl.depthFunc(this.gl.LEQUAL);
 		}
 
 		RenderAll() {
@@ -39,7 +41,11 @@
 
 		DrawSpr(AtlasX: number, AtlasY: number, AtlasWidth, AtlasHeigh, ScreenX: number, ScreenY: number, ScreenWidth: number, ScreenHeight) {
 			this.vbo.DrawSpr(AtlasX, AtlasY, AtlasWidth, AtlasHeigh, ScreenX, ScreenY, ScreenWidth, ScreenHeight);
-		}
+        }
+
+        SetHight(hight: number) {
+            this.vbo.SetupHeight(hight);
+        }
 
 		PrepareTxt(str: string, color:string, fontSize:number, outLine = false) {
 			return this.Text.PrepareTxt(str,color,fontSize, outLine);

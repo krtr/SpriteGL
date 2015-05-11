@@ -2925,14 +2925,14 @@ var SpriteGL;
             this.gl.uniformMatrix4fv(this.MatUniform, false, mat.all());
         };
         Shader.defaultVertexShaderSrc = [
-            "attribute vec2 aVertexPosition;",
+            "attribute vec3 aVertexPosition;",
             "attribute vec2 aTexCoord;",
             "uniform mat4 uProjectionView;",
             "uniform vec2 uCameraPos;",
             "varying vec2 vtexCoord;",
             "void main(void) {",
             "	vtexCoord = aTexCoord;",
-            "	gl_Position = vec4(aVertexPosition.x - uCameraPos.x, aVertexPosition.y - uCameraPos.y, 0.0, 1.0) * uProjectionView;",
+            "	gl_Position = vec4(aVertexPosition.x - uCameraPos.x, aVertexPosition.y - uCameraPos.y, aVertexPosition.z, 1.0) * uProjectionView;",
             "}"
         ].join("\n");
         Shader.defaultFragmentShaderSrc = [
@@ -2941,7 +2941,7 @@ var SpriteGL;
             "varying vec2 vtexCoord;",
             "void main(void) {",
             "	gl_FragColor = texture2D(sampler2d, vec2(vtexCoord.s,vtexCoord.t));",
-            "  // if(gl_FragColor.a < 1.0) discard;",
+            "   if(gl_FragColor.a < 0.5) discard;",
             "}"
         ].join("\n");
         return Shader;
@@ -2963,6 +2963,9 @@ var SpriteGL;
             this.gl.clearColor(0.0, 0.0, 0.0, 1.0);
             this.gl.blendFunc(this.gl.SRC_ALPHA, this.gl.ONE_MINUS_SRC_ALPHA);
             this.gl.enable(this.gl.BLEND);
+            this.SetHight(0.0);
+            this.gl.enable(this.gl.DEPTH_TEST);
+            this.gl.depthFunc(this.gl.LEQUAL);
         }
         SpriteRenderer.prototype.RenderAll = function () {
             this.gl.clear(this.gl.COLOR_BUFFER_BIT);
@@ -2979,6 +2982,9 @@ var SpriteGL;
         };
         SpriteRenderer.prototype.DrawSpr = function (AtlasX, AtlasY, AtlasWidth, AtlasHeigh, ScreenX, ScreenY, ScreenWidth, ScreenHeight) {
             this.vbo.DrawSpr(AtlasX, AtlasY, AtlasWidth, AtlasHeigh, ScreenX, ScreenY, ScreenWidth, ScreenHeight);
+        };
+        SpriteRenderer.prototype.SetHight = function (hight) {
+            this.vbo.SetupHeight(hight);
         };
         SpriteRenderer.prototype.PrepareTxt = function (str, color, fontSize, outLine) {
             if (outLine === void 0) { outLine = false; }
@@ -3036,9 +3042,9 @@ var TextDrawer = (function () {
         var size = this.ctx.measureText(str);
         var currStartY = 0;
         for (var i = 0; i < this.txtsList.length; i++) {
-            currStartY += this.txtsList[i].Size.Height;
+            currStartY += this.txtsList[i].Size.Height * 1.2;
         }
-        var test = { str: str, Pos: { x: 0, y: currStartY }, Size: { Width: size.width + Math.sqrt(fontSize) * 2, Height: fontSize + Math.sqrt(fontSize) * 2 }, Color: color, FontSize: fontSize, OutLine: outline };
+        var test = { str: str, Pos: { x: 0, y: currStartY }, Size: { Width: size.width + Math.sqrt(fontSize) * 1.7, Height: fontSize + Math.sqrt(fontSize) * 2 }, Color: color, FontSize: fontSize, OutLine: outline };
         this.txtsList.push(test);
         this.BakeTexture();
         return test;
@@ -3075,28 +3081,32 @@ var SpriteGL;
             this.verticlesBuffer = gl.createBuffer();
             gl.bindBuffer(gl.ARRAY_BUFFER, this.verticlesBuffer);
         }
+        VBO.prototype.SetupHeight = function (hight) {
+            this.hight = hight;
+        };
         VBO.prototype.SetupForDraw = function (vertexPositionAttr, textureCoordAttr, AtlasSize) {
             this.gl.enableVertexAttribArray(vertexPositionAttr);
-            this.gl.vertexAttribPointer(vertexPositionAttr, 2, this.gl.FLOAT, false, 16, 0);
+            this.gl.vertexAttribPointer(vertexPositionAttr, 3, this.gl.FLOAT, false, 20, 0);
             this.gl.enableVertexAttribArray(textureCoordAttr);
-            this.gl.vertexAttribPointer(textureCoordAttr, 2, this.gl.FLOAT, false, 16, 8);
-            this.gl.bufferData(this.gl.ARRAY_BUFFER, new Float32Array(24 * 10000), this.gl.STREAM_DRAW);
+            this.gl.vertexAttribPointer(textureCoordAttr, 2, this.gl.FLOAT, false, 20, 12);
+            this.gl.bufferData(this.gl.ARRAY_BUFFER, new Float32Array(15 * 10000), this.gl.STREAM_DRAW);
             this.AtlasSize = AtlasSize;
         };
         VBO.prototype.RenderAllSpr = function () {
             this.gl.bufferSubData(this.gl.ARRAY_BUFFER, 0, new Float32Array(this.sprVerts));
-            this.gl.drawArrays(this.gl.TRIANGLES, 0, this.sprVerts.length / 4);
+            this.gl.drawArrays(this.gl.TRIANGLES, 0, this.sprVerts.length / 5);
             this.sprVerts = [];
         };
         VBO.prototype.RenderAllTxt = function () {
             this.gl.bufferSubData(this.gl.ARRAY_BUFFER, 0, new Float32Array(this.txtVerts));
-            this.gl.drawArrays(this.gl.TRIANGLES, 0, this.txtVerts.length / 4);
+            this.gl.drawArrays(this.gl.TRIANGLES, 0, this.txtVerts.length / 5);
             this.txtVerts = [];
         };
         VBO.prototype.DrawSpr = function (AtlasX, AtlasY, AtlasWidth, AtlasHeigh, ScreenX, ScreenY, ScreenWidth, ScreenHeight) {
             for (var i = 0; i < VBO.defaultVerts.length; i += 2) {
                 this.sprVerts.push(VBO.defaultVerts[i] * ScreenWidth + ScreenX | 0);
                 this.sprVerts.push(VBO.defaultVerts[i + 1] * ScreenHeight + ScreenY | 0);
+                this.sprVerts.push(0);
                 this.sprVerts.push(VBO.defaultVerts[i] * (AtlasWidth / this.AtlasSize) + (AtlasX / this.AtlasSize));
                 this.sprVerts.push(VBO.defaultVerts[i + 1] * (AtlasHeigh / this.AtlasSize) + (AtlasY / this.AtlasSize));
             }
@@ -3105,6 +3115,7 @@ var SpriteGL;
             for (var i = 0; i < VBO.defaultVerts.length; i += 2) {
                 this.txtVerts.push(VBO.defaultVerts[i] * ScreenWidth + ScreenX | 0);
                 this.txtVerts.push(VBO.defaultVerts[i + 1] * ScreenHeight + ScreenY | 0);
+                this.txtVerts.push(0);
                 this.txtVerts.push(VBO.defaultVerts[i] * (AtlasWidth / 1024) + (AtlasX / 1024));
                 this.txtVerts.push(VBO.defaultVerts[i + 1] * (AtlasHeigh / 1024) + (AtlasY / 1024));
             }

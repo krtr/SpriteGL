@@ -31,9 +31,9 @@
 		var size = this.ctx.measureText(str);
 		var currStartY = 0;
 		for (var i = 0; i < this.txtsList.length; i++) {
-			currStartY += this.txtsList[i].Size.Height;
+			currStartY += this.txtsList[i].Size.Height*1.2;
 		}
-		var test = { str: str, Pos: { x: 0, y: currStartY }, Size: { Width: size.width + Math.sqrt(fontSize) * 2, Height: fontSize + Math.sqrt(fontSize) * 2 }, Color: color, FontSize: fontSize, OutLine: outline };
+		var test = { str: str, Pos: { x: 0, y: currStartY }, Size: { Width: size.width + Math.sqrt(fontSize) * 1.7, Height: fontSize + Math.sqrt(fontSize) * 2 }, Color: color, FontSize: fontSize, OutLine: outline };
 		this.txtsList.push(test);
 		this.BakeTexture();
 		return test;
