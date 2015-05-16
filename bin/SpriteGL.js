@@ -2990,6 +2990,9 @@ var SpriteGL;
             if (outLine === void 0) { outLine = false; }
             return this.Text.PrepareTxt(str, color, fontSize, outLine);
         };
+        SpriteRenderer.prototype.DisposeTxt = function (txtObj) {
+            this.Text.DisposeTxt(txtObj);
+        };
         SpriteRenderer.prototype.DrawTxt = function (txtObj, PosX, PosY) {
             this.vbo.DrawTxt(txtObj.Pos.x, txtObj.Pos.y, txtObj.Size.Width, txtObj.Size.Height, PosX, PosY, txtObj.Size.Width, txtObj.Size.Height);
         };
@@ -3039,15 +3042,51 @@ var TextDrawer = (function () {
     }
     TextDrawer.prototype.PrepareTxt = function (str, color, fontSize, outline) {
         this.ctx.font = "bold " + fontSize + "px Tahoma";
-        var size = this.ctx.measureText(str);
+        var currTxtWidth = this.ctx.measureText(str).width;
         var currStartY = 0;
+        var highestPosYIndex = 0;
         for (var i = 0; i < this.txtsList.length; i++) {
-            currStartY += this.txtsList[i].Size.Height * 1.2;
+            if (this.txtsList[i].Pos.y >= this.txtsList[highestPosYIndex].Pos.y) {
+                highestPosYIndex = i;
+                currStartY = this.txtsList[highestPosYIndex].Pos.y + this.txtsList[highestPosYIndex].Size.Height * 1.2;
+            }
         }
-        var test = { str: str, Pos: { x: 0, y: currStartY }, Size: { Width: size.width + Math.sqrt(fontSize) * 1.7, Height: fontSize + Math.sqrt(fontSize) * 2 }, Color: color, FontSize: fontSize, OutLine: outline };
+        console.log(highestPosYIndex, currStartY);
+        var test = {
+            str: str,
+            Pos: { x: 0, y: currStartY },
+            Size: {
+                Width: currTxtWidth + Math.sqrt(fontSize) * 1.7,
+                Height: fontSize + Math.sqrt(fontSize) * 2
+            },
+            Color: color,
+            FontSize: fontSize,
+            OutLine: outline
+        };
         this.txtsList.push(test);
         this.BakeTexture();
         return test;
+    };
+    TextDrawer.prototype.DisposeTxt = function (txtObj) {
+        var index = this.txtsList.indexOf(txtObj);
+        if (index > -1 && index) {
+            this.txtsList.splice(index, 1);
+            console.log("Removed");
+        }
+        this.UpdatePositon();
+        this.BakeTexture();
+    };
+    TextDrawer.prototype.UpdatePositon = function () {
+        this.txtsList.sort(function (a, b) {
+            return a.Pos.y - b.Pos.y;
+        });
+        for (var i = 0; i < this.txtsList.length; i++) {
+            var newPosY = 0;
+            for (var j = 0; j < i; j++) {
+                newPosY += this.txtsList[j].Size.Height * 1.2;
+            }
+            this.txtsList[i].Pos.y = newPosY;
+        }
     };
     TextDrawer.prototype.BakeTexture = function () {
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);

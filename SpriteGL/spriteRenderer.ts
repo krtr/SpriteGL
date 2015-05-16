@@ -49,11 +49,16 @@
 
 		PrepareTxt(str: string, color:string, fontSize:number, outLine = false) {
 			return this.Text.PrepareTxt(str,color,fontSize, outLine);
-		}
+        }
+
+        DisposeTxt(txtObj) {
+            this.Text.DisposeTxt(txtObj);
+        }
 
 		DrawTxt(txtObj, PosX: number, PosY: number) {
 			this.vbo.DrawTxt(txtObj.Pos.x, txtObj.Pos.y, txtObj.Size.Width, txtObj.Size.Height, PosX, PosY, txtObj.Size.Width, txtObj.Size.Height);
-		}
+        }
+
 
 		UpdateCamera(x: number, y: number) {
 			this.Shader.UpdatePosition(x, y);

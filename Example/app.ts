@@ -6,7 +6,8 @@
 		var Renderer = SpriteGL.SpriteRenderer.fromCanvas(canvas, img);
 		var time = 0;
 		var txt = Renderer.PrepareTxt("8", "White", 25, true);
-		var txt2 = Renderer.PrepareTxt("test", "Red", 13, true);
+        var txt2 = Renderer.PrepareTxt("test", "Red", 13, true);
+        var txt3 = Renderer.PrepareTxt("te5235t", "Red", 13, true);
 		var Loop = () => {
 			time += 0.002;
 			var count = 100;
@@ -27,7 +28,9 @@
 			Renderer.DrawTxt(txt, 100, 0);
 			Renderer.DrawSpr(0, 0, 32, 32, -100, 0, 32, 32);
 			Renderer.UpdateCamera(time * 5, 0);
-			Renderer.RenderAll();
+            Renderer.RenderAll();
+            Renderer.DisposeTxt(txt2);
+            txt2 = Renderer.PrepareTxt(time.toString(), "Red", 13, true);
 			requestAnimationFrame(Loop);
 		}
 		Loop();
