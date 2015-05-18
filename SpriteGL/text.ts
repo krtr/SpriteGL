@@ -39,7 +39,6 @@
                 currStartY = this.txtsList[highestPosYIndex].Pos.y + this.txtsList[highestPosYIndex].Size.Height * 1.2;
             }
         }
-        console.log(highestPosYIndex, currStartY);
         var test = {
             str: str, Pos: { x: 0, y: currStartY }, Size: {
             Width: currTxtWidth + Math.sqrt(fontSize) * 1.7,
@@ -57,7 +56,6 @@
         
         if (index > -1 && index) {
             this.txtsList.splice(index, 1);
-            console.log("Removed");
         }
 
         this.UpdatePositon();
