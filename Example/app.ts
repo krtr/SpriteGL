@@ -2,8 +2,8 @@
 	var canvas = <HTMLCanvasElement> document.getElementById("RenderElement");
 	var img = new Image();
 	img.src = "atlas.png";
-	img.onload = function () {
-		var Renderer = SpriteGL.SpriteRenderer.fromCanvas(canvas, img);
+    img.onload = function () {
+        var Renderer = SpriteGL.SpriteRenderer.fromCanvas(canvas, img, SpriteGL.SpriteRenderer.TextureFilteringNearest);
 		var time = 0;
 		var txt = Renderer.PrepareTxt("8", "White", 25, true);
         var txt2 = Renderer.PrepareTxt("test", "Red", 13, true);
