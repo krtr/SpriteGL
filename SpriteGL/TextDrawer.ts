@@ -7,7 +7,7 @@
 	FontSize: number;
 }
 
-class TextDrawer {
+export default class TextDrawer {
 	public TextureSize = { Width: 1024, Height: 1024 };
 	private ctx: CanvasRenderingContext2D;
 	private canvas: HTMLCanvasElement;
