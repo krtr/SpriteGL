@@ -1,4 +1,4 @@
-﻿var SpriteGL = require("../SpriteGL");
+﻿var SpriteGL = require("../");
 
 window.onload = function () {
 	var canvas = <HTMLCanvasElement>document.getElementById("RenderElement");

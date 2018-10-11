@@ -11,7 +11,7 @@
   "umd:main": "dist/SpriteGL.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "parcel Example/index.html --out-dir Example/dist",
+    "start": "parcel demo/index.html --out-dir demo/dist",
     "build": "bili"
   },
   "author": "",

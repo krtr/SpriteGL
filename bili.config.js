@@ -1,7 +1,7 @@
 "use strict";
 
 module.exports = {
-	input: "SpriteGL/index.ts",
+	input: "src/index.ts",
 	banner: true,
 	format: ["es", "cjs", "umd", "umd-min"],
 	"typescript2": {

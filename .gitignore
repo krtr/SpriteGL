@@ -229,4 +229,5 @@ $RECYCLE.BIN/
 *.msm
 *.msp
 
-Example/dist
+# Demo bundled sources.
+demo/dist
