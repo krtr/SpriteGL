@@ -1,0 +1,7 @@
+{
+  "files": ["SpriteGL/index.ts"],
+  "compilerOptions": {
+    "declaration": true,
+    "declarationDir": "types/"
+  }
+}

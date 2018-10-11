@@ -2,21 +2,23 @@
   "name": "SpriteGL",
   "version": "0.0.0",
   "description": "Easy and fast sprite rendereing",
-  "main": "none",
+  "cdn": "dist/SpriteGL.min.js",
+  "main": "dist/SpriteGL.cjs.js",
+  "types": "types/index.d.ts",
+  "unpkg": "dist/SpriteGL.min.js",
+  "module": "dist/SpriteGL.es.js",
+  "jsdelivr": "dist/SpriteGL.min.js",
+  "umd:main": "dist/SpriteGL.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "bili"
   },
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "gulp": "^3.8.10",
-    "gulp-add-src": "^0.2.0",
-    "gulp-concat": "^2.4.2",
-    "gulp-rename": "^1.2.0",
-    "gulp-typescript": "^2.3.0",
-    "open": "0.0.5",
-    "run-sequence": "^1.0.2",
-    "static-server": "^2.0.0"
+    "bili": "^3.1.2",
+    "rollup-plugin-typescript2": "^0.17.1",
+    "typescript": "^3.1.2"
   },
   "dependencies": {
     "tsm": "https://github.com/VitorluizC/tsm"
