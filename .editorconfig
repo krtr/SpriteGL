@@ -1,0 +1,12 @@
+# Editor settings for any editor or IDE.
+# References at https://editorconfig.org/.
+
+root = true
+
+# Editor settings for every file.
+[*]
+  charset = utf-8
+  end_of_line = lf
+  indent_style = tab
+  insert_final_newline = true
+  trim_trailing_whitespace = true

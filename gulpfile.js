@@ -7,56 +7,54 @@ var addsrc = require('gulp-add-src');
 var runsequence = require("run-sequence");
 var fs = require("fs");
 
-
 gulp.task("build", function () {
-    runsequence("build-files", "remove-internal-classes")
+	runsequence("build-files", "remove-internal-classes")
 });
 
 gulp.task("build-files", function () {
-    var tsResult = gulp.src(["./SpriteGL/*.ts", "./3rd/tsm-0.7.d.ts"])
-					.pipe(typescript({ sortOutput: true, target: "ES5", removeComments: true, declarationFiles: true }));
+	var tsResult = gulp.src(["./SpriteGL/*.ts", "./3rd/tsm-0.7.d.ts"])
+		.pipe(typescript({ sortOutput: true, target: "ES5", removeComments: true, declarationFiles: true }));
 
-    tsResult.dts
+	tsResult.dts
 		.pipe(concat("SpriteGL.d.ts"))
 		.pipe(gulp.dest("./bin"));
 
-    tsResult.js
-        .pipe(addsrc("./3rd/tsm-0.7.js"))
+	tsResult.js
+		.pipe(addsrc("./3rd/tsm-0.7.js"))
 		.pipe(concat("SpriteGL.js"))
 		.pipe(gulp.dest("./bin"));
 });
 
 gulp.task("debug", function () {
-    gulp.src("./bin/SpriteGL.js")
+	gulp.src("./bin/SpriteGL.js")
 		.pipe(gulp.dest("./Example"));
 
-    var tsResult = gulp.src(["./Example/*.ts", "./bin/SpriteGL.d.ts"])
-					.pipe(typescript({ target: "ES5" }))
-					.pipe(gulp.dest("./Example"));
+	var tsResult = gulp.src(["./Example/*.ts", "./bin/SpriteGL.d.ts"])
+		.pipe(typescript({ target: "ES5" }))
+		.pipe(gulp.dest("./Example"));
 
-    var server = new StaticServer({ rootPath: './Example', port: 80, host: 'localhost' });
+	var server = new StaticServer({ rootPath: './Example', port: 80, host: 'localhost' });
 
-    server.start(function () {
-        console.log('Server listening to', server.port);
-        open("http://localhost")
-    });
+	server.start(function () {
+		console.log('Server listening to', server.port);
+		open("http://localhost")
+	});
 })
 
 gulp.task("remove-internal-classes", function () {
-    setTimeout(function () {
-        var data = fs.readFileSync('./bin/SpriteGL.d.ts').toString();
-        var start = data.indexOf("class SpriteRenderer {", 0);
-        var end = data.indexOf("}", start+1);
-        var new_string = data.substring(start, end + 1);
-        var lines = new_string.split("\n");
-        for (var i = 0; i < lines.length; i++) {
-            if (lines[i].indexOf("private") !== -1) {
-                lines.splice(i, 1);
-                i--;
-            }
-        }
-        new_string = lines.join("\n");
-        fs.writeFileSync('./bin/SpriteGL.d.ts',"declare module SpriteGL { \n" + new_string + "\n }");
-    }, 1000);
-
+	setTimeout(function () {
+		var data = fs.readFileSync('./bin/SpriteGL.d.ts').toString();
+		var start = data.indexOf("class SpriteRenderer {", 0);
+		var end = data.indexOf("}", start + 1);
+		var new_string = data.substring(start, end + 1);
+		var lines = new_string.split("\n");
+		for (var i = 0; i < lines.length; i++) {
+			if (lines[i].indexOf("private") !== -1) {
+				lines.splice(i, 1);
+				i--;
+			}
+		}
+		new_string = lines.join("\n");
+		fs.writeFileSync('./bin/SpriteGL.d.ts', "declare module SpriteGL { \n" + new_string + "\n }");
+	}, 1000);
 });

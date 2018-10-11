@@ -1,5 +1,4 @@
 ﻿module SpriteGL {
-
 	export class Shader {
 		glProgram: WebGLProgram;
 		VertexPosAttribute: number;
@@ -17,7 +16,6 @@
 			this.TexSampleUniform = gl.getUniformLocation(this.glProgram, "sampler2d");
 			this.MatUniform = gl.getUniformLocation(this.glProgram, "uProjectionView");
 			this.CameraPosUniform = gl.getUniformLocation(this.glProgram, "uCameraPos");
-
 		}
 
 		public UseProgram() {
@@ -50,30 +48,32 @@
 				alert(gl.getShaderInfoLog(Shader));
 			}
 			return Shader;
-        }
+		}
 
-        public updateMatrix(mat: TSM.mat4) {
-            this.gl.uniformMatrix4fv(this.MatUniform, false, mat.all());
-        }
+		public updateMatrix(mat: TSM.mat4) {
+			this.gl.uniformMatrix4fv(this.MatUniform, false, mat.all());
+		}
 
-		private static defaultVertexShaderSrc = [
-			"attribute vec3 aVertexPosition;",
-            "attribute vec2 aTexCoord;",
-			"uniform mat4 uProjectionView;",
-			"uniform vec2 uCameraPos;",
-			"varying vec2 vtexCoord;",
-			"void main(void) {",
-			"	vtexCoord = aTexCoord;",
-			"	gl_Position = vec4(aVertexPosition.x - uCameraPos.x, aVertexPosition.y - uCameraPos.y, aVertexPosition.z, 1.0) * uProjectionView;",
-			"}"].join("\n");
+		private static defaultVertexShaderSrc = `
+			attribute vec3 aVertexPosition;
+			attribute vec2 aTexCoord;
+			uniform mat4 uProjectionView;
+			uniform vec2 uCameraPos;
+			varying vec2 vtexCoord;
+			void main(void) {
+				vtexCoord = aTexCoord;
+				gl_Position = vec4(aVertexPosition.x - uCameraPos.x, aVertexPosition.y - uCameraPos.y, aVertexPosition.z, 1.0) * uProjectionView;
+			}
+		`;
 
-		private static defaultFragmentShaderSrc = [
-			"precision mediump float;",
-			"uniform sampler2D sampler2d;",
-			"varying vec2 vtexCoord;",
-			"void main(void) {",
-			"	gl_FragColor = texture2D(sampler2d, vec2(vtexCoord.s,vtexCoord.t));",
-            "   if(gl_FragColor.a < 0.5) discard;",
-			"}"].join("\n");
+		private static defaultFragmentShaderSrc = `
+			precision mediump float;
+			uniform sampler2D sampler2d;
+			varying vec2 vtexCoord;
+			void main(void) {
+				gl_FragColor = texture2D(sampler2d, vec2(vtexCoord.s,vtexCoord.t));
+				if(gl_FragColor.a < 0.5) discard;
+			}
+		`;
 	}
 }
