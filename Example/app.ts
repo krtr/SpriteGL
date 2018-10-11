@@ -1,7 +1,9 @@
-﻿window.onload = function () {
+﻿var SpriteGL = require("../SpriteGL");
+
+window.onload = function () {
 	var canvas = <HTMLCanvasElement>document.getElementById("RenderElement");
 	var img = new Image();
-	img.src = "atlas.png";
+	img.src = require("./atlas.png");
 	img.onload = function () {
 		var Renderer = SpriteGL.SpriteRenderer.fromCanvas(canvas, img, SpriteGL.SpriteRenderer.TextureFilteringNearest);
 		var time = 0;

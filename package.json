@@ -11,12 +11,14 @@
   "umd:main": "dist/SpriteGL.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "parcel Example/index.html --out-dir Example/dist",
     "build": "bili"
   },
   "author": "",
   "license": "ISC",
   "devDependencies": {
     "bili": "^3.1.2",
+    "parcel-bundler": "^1.10.2",
     "rollup-plugin-typescript2": "^0.17.1",
     "typescript": "^3.1.2"
   },
