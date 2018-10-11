@@ -1,4 +1,6 @@
-﻿export default class Shader {
+﻿import * as TSM from "tsm";
+
+export default class Shader {
 	glProgram: WebGLProgram;
 	VertexPosAttribute: number;
 	TexCoordAttribute: number;

@@ -17,5 +17,8 @@
     "open": "0.0.5",
     "run-sequence": "^1.0.2",
     "static-server": "^2.0.0"
+  },
+  "dependencies": {
+    "tsm": "https://github.com/VitorluizC/tsm"
   }
 }

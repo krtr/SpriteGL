@@ -1,4 +1,5 @@
-﻿import VBO from "./VBO";
+﻿import * as TSM from "tsm";
+import VBO from "./VBO";
 import Shader from "./Shader";
 import TextDrawer from "./TextDrawer";
 
