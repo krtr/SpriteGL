@@ -231,3 +231,5 @@ $RECYCLE.BIN/
 
 # Demo bundled sources.
 demo/dist
+.cache
+.idea
